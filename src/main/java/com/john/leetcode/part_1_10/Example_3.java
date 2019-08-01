@@ -36,7 +36,7 @@ public class Example_3 {
         String param4 = "aab";
         String param5 = "au";
         String param6 = "dvdf";
-        String param7 = "cdd";
+        String param7 = "cddd";
 
         System.out.println(lengthOfLongestSubstring(param1));
         System.out.println(lengthOfLongestSubstring(param2));
