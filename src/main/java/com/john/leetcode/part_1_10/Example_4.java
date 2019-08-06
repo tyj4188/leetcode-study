@@ -21,12 +21,13 @@ package com.john.leetcode.part_1_10;
 public class Example_4 {
 
     public static void main(String[] args) {
-        int[] nums1 = new int[]{2,3,4,5,6};
-        int[] nums2 = new int[]{1};
+        int[] nums1 = new int[]{1, 3};
+        int[] nums2 = new int[]{2};
 
-        //System.out.println(findMedianSortedArrays_V1(nums1, nums2));
-        //System.out.println(findMedianSortedArrays_V2(nums1, nums2));
+        System.out.println(findMedianSortedArrays_V1(nums1, nums2));
+        System.out.println(findMedianSortedArrays_V2(nums1, nums2));
         System.out.println(findMedianSortedArrays_V3(nums1, nums2));
+        System.out.println(findMedianSortedArrays_V4(nums1, nums2));
     }
 
     /**
@@ -209,20 +210,20 @@ public class Example_4 {
      *  为了保证上面两个条件 :
      *      i + j = m - i + n - j; j = (m + n)/2 -i = (m + n + 1)/2 - i
      *  另外需要保证 n >= m, 因为 0 <= i <= m, 如果 m > n, j = (m + n + 1)/2 - i, 有可能结果为负数。
-     *  因为整数计算，除以 2 会向下取整，所以 + 1 之后对结果不会有影响, 这是为了使左边的数量比右边的多 1。
+     *  因为整数计算，除以 2 会向下取整，所以 + 1 之后对结果不会有影响。
+     *
      *  先使 i = (m + n) / 2, j = (m + n)/2 -i, 最终使 A[i - 1] < B[j] && B[j - 1] < A[i], 找出符合这个条件的 i 的位置。
-     *  如果 A[i - 1] > B[j] 那么说明 A 的部分过大, 那么 i 需要减小, 而 i 减小的同时根据 j = (n + m)/2 -i, j 会相应的增大。
-     *  如果 B[j - 1] > A[i] 说明 A 的部分过小, 需要减小 i 的值, 同理 j 会增大, 直到找到符合条件的 i。
+     *      1. 如果 A[i - 1] > B[j] 那么说明 A 的部分过大, 那么 i 需要减小, 而 i 减小的同时根据 j = (n + m)/2 -i, j 会相应的增大。
+     *      2. 如果 B[j - 1] > A[i] 说明 A 的部分过小, 需要减小 i 的值, 同理 j 会增大, 直到找到符合条件的 i。
      *
-     *
-     *
+     *  如果碰到了临界值 i = 0 || i = m || j = 0 || j = n, 那么 A 和 B就有一个不存在的，只需要取另外一个数组的元素。
      *
      * @param nums1
      * @param nums2
      * @return
      */
     public static double findMedianSortedArrays_V4(int[] nums1, int[] nums2) {
-        int n = nums1.length, m = nums2.length;
+        int m = nums1.length, n = nums2.length;
 
         // 保持 M 是小的那个数组
         if(m > n) {
@@ -230,17 +231,43 @@ public class Example_4 {
         }
 
         // 遍历小的数组
-        int iMin = 0, iMax = m;
+        int iMin = 0, iMax = m, halfLen = (m + n + 1) / 2;
 
         while(iMin <= iMax) {
             // i = 中间位置 (iMin + iMax) / 2
             // j = (m + n) / 2 - i
-            int i, j;
+            int i = (iMin + iMax) / 2;
+            int j = halfLen - i;
 
+            // i 过小, 右移增大
+            if(i < iMax && nums1[i] < nums2[j - 1]) {
+                iMin = i + 1;
+            }
+            // i 过大, 左移减小
+            else if(i > iMin && nums1[i - 1] > nums2[j]) {
+                iMax = i - 1;
+            }
+            // 合适的 i 值
+            else {
+                // 计算左边最大值
+                int maxLeft = 0;
+                // A 已经到最左
+                if (i == 0) { maxLeft = nums2[j - 1]; }
+                // B 已经到最左
+                else if (j == 0) { maxLeft = nums1[i - 1]; }
+                // 找到 left_part 的最大值
+                else { maxLeft = Math.max(nums1[i - 1], nums2[j - 1]); }
+                // 奇数个直接返回
+                if((m + n) % 2 == 1) { return maxLeft; }
+
+                int minRight = 0;
+                // 需要判断右边的临界值
+                if(i == m) { minRight = nums2[j]; }
+                else if(j == n) { minRight = nums1[i]; }
+                else { minRight = Math.min(nums1[i], nums2[j]); }
+                return (maxLeft + minRight) / 2.0;
+            }
         }
-
         return 0;
     }
-
-
 }
