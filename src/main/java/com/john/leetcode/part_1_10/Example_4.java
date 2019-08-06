@@ -185,11 +185,11 @@ public class Example_4 {
         int t2 = start2 + Math.min(len2, k / 2) - 1;
         if(nums1[t1] > nums2[t2]) {
             // 如果数组 A 的 k / 2 大于 B 的 k / 2 那么就排除掉 B 中 start 到 t2 的数字
-            // t2 + 1 = 排除掉包含 t2 的数字，下一次从 t2 + 1 开始计算
-            // k - (t2 - start2 + 1), 这里的 + 1 是从下标值转为个数
+            // t2 = k / 2, t2 + 1 = 排除掉包含 t2 的数字，下一次从 t2 + 1 开始计算
+            // k - (t2 - start2 + 1) = new_k, 从 A 中找第 new_k 小的数字
             return v3_do_1(nums1, start1, end1, nums2, t2 + 1, end2, k - (t2 - start2 + 1));
         } else {
-            return v3_do_1(nums1, t1 + 1, end1, nums2, start2, end2, k - (t2 - start2 + 1));
+            return v3_do_1(nums1, t1 + 1, end1, nums2, start2, end2, k - (t1 - start1 + 1));
         }
     }
 
