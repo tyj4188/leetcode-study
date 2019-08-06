@@ -94,8 +94,8 @@ public class Example_4 {
      * @return
      */
     public static double findMedianSortedArrays_V2(int[] nums1, int[] nums2) {
-        int n = nums1.length, m = nums2.length;
-        int len = n + m;
+        int m = nums1.length, n = nums2.length;
+        int len = m + n;
 
         // A 和 B 的下标
         int itrA = 0, itrB = 0;
@@ -106,7 +106,7 @@ public class Example_4 {
             // 每次循环都记录 right 的上一个数字
             left = right;
             // itrB >= m 判断防止 nums2 数组越界
-            if(itrA < n && (itrB >= m || nums1[itrA] < nums2[itrB])) {
+            if(itrA < m && (itrB >= n || nums1[itrA] < nums2[itrB])) {
                 right = nums1[itrA ++];
             } else {
                 right = nums2[itrB ++];
@@ -143,16 +143,16 @@ public class Example_4 {
      */
     public static double findMedianSortedArrays_V3(int[] nums1, int[] nums2) {
         // 算出 k 的值
-        int n = nums1.length, m = nums2.length;
+        int m = nums1.length, n = nums2.length;
 
         // 偶数计算中间两个值，奇数计算两次同样的值
         // n = 2, m = 3, (n + m + 1) = 6, (n + m + 2) = 7, leftK = 3, rightK = 3.5 = 3
         // n = 2, m = 2, (n + m + 1) = 5, (n + m + 2) = 6, leftK = 2.5 = 2, rightK = 3
-        int leftK = (n + m + 1) / 2;
-        int rightK = (n + m + 2) / 2;
+        int leftK = (m + n + 1) / 2;
+        int rightK = (m + n + 2) / 2;
 
-        double left = v3_do_1(nums1, 0, n - 1, nums2, 0, m - 1, leftK);
-        double right = v3_do_1(nums1, 0, n - 1, nums2, 0, m - 1, rightK);
+        double left = v3_do_1(nums1, 0, m - 1, nums2, 0, n - 1, leftK);
+        double right = v3_do_1(nums1, 0, m - 1, nums2, 0, n - 1, rightK);
         return (left + right) / 2;
     }
 
@@ -191,6 +191,55 @@ public class Example_4 {
         } else {
             return v3_do_1(nums1, t1 + 1, end1, nums2, start2, end2, k - (t1 - start1 + 1));
         }
+    }
+
+    /**
+     * 二分法求中位数
+     *  时间复杂度为 O(log(min(n, m)))
+     *  空间复杂度为 O(1)
+     *
+     * 解题思路：使用二分法查找中位数。
+     *  定义两个变量 i / j 把数组 A / B 切分为
+     *      left_A = i; right_A = m - i; left_B = j; right_B = n - j;
+     *  把 A 和 B 的左和右合为 left_part / right_part, 使左右两部分的元素数量相等。
+     *      len(left_part) = len(right_part)
+     *      max(left_part) <= min(right_part)
+     *  中位数为 :
+     *      median = (max(left_part) + min(right_part)) / 2
+     *  为了保证上面两个条件 :
+     *      i + j = m - i + n - j; j = (m + n)/2 -i = (m + n + 1)/2 - i
+     *  另外需要保证 n >= m, 因为 0 <= i <= m, 如果 m > n, j = (m + n + 1)/2 - i, 有可能结果为负数。
+     *  因为整数计算，除以 2 会向下取整，所以 + 1 之后对结果不会有影响, 这是为了使左边的数量比右边的多 1。
+     *  先使 i = (m + n) / 2, j = (m + n)/2 -i, 最终使 A[i - 1] < B[j] && B[j - 1] < A[i], 找出符合这个条件的 i 的位置。
+     *  如果 A[i - 1] > B[j] 那么说明 A 的部分过大, 那么 i 需要减小, 而 i 减小的同时根据 j = (n + m)/2 -i, j 会相应的增大。
+     *  如果 B[j - 1] > A[i] 说明 A 的部分过小, 需要减小 i 的值, 同理 j 会增大, 直到找到符合条件的 i。
+     *
+     *
+     *
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public static double findMedianSortedArrays_V4(int[] nums1, int[] nums2) {
+        int n = nums1.length, m = nums2.length;
+
+        // 保持 M 是小的那个数组
+        if(m > n) {
+            return findMedianSortedArrays_V4(nums2, nums1);
+        }
+
+        // 遍历小的数组
+        int iMin = 0, iMax = m;
+
+        while(iMin <= iMax) {
+            // i = 中间位置 (iMin + iMax) / 2
+            // j = (m + n) / 2 - i
+            int i, j;
+
+        }
+
+        return 0;
     }
 
 
