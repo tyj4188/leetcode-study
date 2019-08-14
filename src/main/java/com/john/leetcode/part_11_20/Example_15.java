@@ -9,8 +9,9 @@
 
 package com.john.leetcode.part_11_20;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.*;
 
 /**
  * 15. 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
@@ -21,14 +22,57 @@ import java.util.List;
  */
 public class Example_15 {
     public static void main(String[] args) {
-
+        int[] nums = new int[]{-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
+        System.out.println(JSONObject.toJSONString(threeSum_V1(nums)));
+        System.out.println(JSONObject.toJSONString(threeSum_V2(nums)));
     }
 
-    public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
+    /**
+     * 暴力解法, 会有重复的组合
+     * 时间复杂度 : O(3n);
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> threeSum_V1(int[] nums) {
+        Set<List<Integer>> result = new HashSet<>();
 
+        int i, j, k;
+        for(i = 0; i < nums.length - 2; i++) {
+            for(j = i + 1; j < nums.length - 1; j ++) {
+                for(k = j + 1; k < nums.length; k++) {
+                    if(0 == nums[i] + nums[j] + nums[k]) {
+                        List<Integer> newList = Arrays.asList(nums[i], nums[j], nums[k]);
+                        newList.sort(Comparator.comparingInt(o -> o.intValue()));
+                        result.add(newList);
+                    }
+                }
+            }
+        }
 
+        return new ArrayList<>(result);
+    }
 
-        return result;
+    public static List<List<Integer>> threeSum_V2(int[] nums) {
+        Set<List<Integer>> result = new HashSet<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
+        int i, j;
+        for(i = 0; i < nums.length - 2; i++) {
+            for(j = i + 1; j < nums.length; j ++) {
+                List<Integer> tmpList = map.get(nums[j]);
+                if(tmpList != null && tmpList.size() < 3) {
+                    tmpList = new ArrayList<>(tmpList);
+                    tmpList.add(nums[j]);
+                    tmpList.sort(Comparator.comparingInt(o -> o.intValue()));
+                    result.add(tmpList);
+                    map.remove(nums[j]);
+                } else {
+                    int tmp = 0 - (nums[i] + nums[j]);
+                    map.put(tmp, Arrays.asList(nums[i], nums[j]));
+                }
+            }
+        }
+
+        return new ArrayList<>(result);
     }
 }
