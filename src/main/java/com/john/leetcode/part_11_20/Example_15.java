@@ -25,11 +25,12 @@ public class Example_15 {
         int[] nums = new int[]{-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
         System.out.println(JSONObject.toJSONString(threeSum_V1(nums)));
         System.out.println(JSONObject.toJSONString(threeSum_V2(nums)));
+        System.out.println(JSONObject.toJSONString(threeSum_V3(nums)));
     }
 
     /**
-     * 暴力解法, 会有重复的组合
-     * 时间复杂度 : O(3n);
+     * 暴力解法
+     * 时间复杂度 : O(n^3);
      * @param nums
      * @return
      */
@@ -52,27 +53,82 @@ public class Example_15 {
         return new ArrayList<>(result);
     }
 
+    /**
+     * 使用 map 缓存书签
+     *
+     * 时间复杂度 : O(n^2)
+     * @param nums
+     * @return
+     */
     public static List<List<Integer>> threeSum_V2(int[] nums) {
         Set<List<Integer>> result = new HashSet<>();
-        Map<Integer, List<Integer>> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
 
         int i, j;
+        for(i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+
         for(i = 0; i < nums.length - 2; i++) {
             for(j = i + 1; j < nums.length; j ++) {
-                List<Integer> tmpList = map.get(nums[j]);
-                if(tmpList != null && tmpList.size() < 3) {
-                    tmpList = new ArrayList<>(tmpList);
-                    tmpList.add(nums[j]);
-                    tmpList.sort(Comparator.comparingInt(o -> o.intValue()));
-                    result.add(tmpList);
-                    map.remove(nums[j]);
-                } else {
-                    int tmp = 0 - (nums[i] + nums[j]);
-                    map.put(tmp, Arrays.asList(nums[i], nums[j]));
+                int temp = 0 - (nums[i] + nums[j]);
+                Integer idx = map.get(temp);
+                if(idx != null && idx != i && idx != j) {
+                    List<Integer> tempList = Arrays.asList(nums[i], nums[j], nums[idx]);
+                    tempList.sort(Comparator.comparingInt(o -> o.intValue()));
+                    result.add(tempList);
                 }
             }
         }
 
         return new ArrayList<>(result);
+    }
+
+    /**
+     * 排序 + 双指针
+     * 时间复杂度 : O(n^2)
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> threeSum_V3(int[] nums) {
+        // 先排序, 复杂度 O(n log n)
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+
+        // 外层循环
+        for(int i = 0; i < nums.length - 2; i++) {
+            // 判断当前的数字是否与前一个相等, 相等就跳过这次循环
+            if(i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
+                int l = i + 1, r = nums.length - 1;
+                int sum = 0 - nums[i];
+                while(l < r) {
+                    if(nums[l] + nums[r] == sum) {
+                        result.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                        // 跳过相同值
+                        while(l < r && nums[l] == nums[l+1]) {
+                            l ++;
+                        }
+                        while(l < r && nums[r] == nums[r-1]) {
+                            r --;
+                        }
+                        l ++; r --;
+                    } else if(nums[l] + nums[r] < sum) {
+                        // l 需要右移增大，跳过重复值
+                        while(l < r && nums[l] == nums[l+1]) {
+                            l ++;
+                        }
+                        l ++;
+                    } else {
+                        // 左移减小 r, 跳过重复值
+                        while(l < r && nums[r] == nums[r-1]) {
+                            r --;
+                        }
+                        r --;
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 }
