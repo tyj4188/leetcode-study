@@ -1,13 +1,13 @@
 /* 版权所有(C)，欧拉信息服务有限公司，2019，所有权利保留。
  *
  * 项目名：	com.john.leetcode.part_11_20
- * 文件名：	Example_15
+ * 文件名：	Example_15_ThreeSum
  * 模块说明：
  * 修改历史：
  * 2019/8/13 - GW00174243 - 创建。
  */
 
-package com.john.leetcode.part_11_20;
+package com.john.leetcode.array;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -20,7 +20,7 @@ import java.util.*;
  * @author GW00174243
  * @date 2019/8/13
  */
-public class Example_15 {
+public class Example_15_ThreeSum {
     public static void main(String[] args) {
         int[] nums = new int[]{-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
         System.out.println(JSONObject.toJSONString(threeSum_V1(nums)));
@@ -98,7 +98,7 @@ public class Example_15 {
         // 外层循环
         for(int i = 0; i < nums.length - 2; i++) {
             // 判断当前的数字是否与前一个相等, 相等就跳过这次循环
-            if(i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
+            if(i == 0 || nums[i] != nums[i - 1]) {
                 int l = i + 1, r = nums.length - 1;
                 int sum = 0 - nums[i];
                 while(l < r) {

@@ -1,13 +1,13 @@
 /* 版权所有(C)，欧拉信息服务有限公司，2019，所有权利保留。
  *
  * 项目名：	com.john.leetcode.part_11_20
- * 文件名：	Example_11
+ * 文件名：	Example_11_MaxArea
  * 模块说明：
  * 修改历史：
  * 2019/8/13 - GW00174243 - 创建。
  */
 
-package com.john.leetcode.part_11_20;
+package com.john.leetcode.array;
 
 /**
  * 11. 给定 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。
@@ -19,7 +19,7 @@ package com.john.leetcode.part_11_20;
  * @author GW00174243
  * @date 2019/8/13
  */
-public class Example_11 {
+public class Example_11_MaxArea {
     public static void main(String[] args) {
         int[] arr = {1,8,6,2,5,4,8,3,7};
 

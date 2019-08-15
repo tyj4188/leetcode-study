@@ -7,7 +7,7 @@
  * 2019/8/1 - Administrator - 创建。
  */
 
-package com.john.leetcode.part_1_10;
+package com.john.leetcode.linked;
 
 /**
  * 题目 2
@@ -25,7 +25,7 @@ package com.john.leetcode.part_1_10;
  * @author Administrator
  * @date 2019/8/1
  */
-public class Example_2 {
+public class Example_2_AddTwoNumbers {
 
     public static void main(String[] args) {
         ListNode param1 = createLink(new int[]{2, 4});

@@ -1,13 +1,13 @@
 /* 
  * 
  * 项目名：	com.john.leetcode.part_1_10
- * 文件名：	Example_4
+ * 文件名：	Example_4_FindMedianSortedArrays
  * 模块说明：	
  * 修改历史：
  * 2019/8/4 - Administrator - 创建。
  */
 
-package com.john.leetcode.part_1_10;
+package com.john.leetcode.array;
 
 /**
  * 4. 寻找两个 有序 数组的中位数
@@ -18,7 +18,7 @@ package com.john.leetcode.part_1_10;
  * @author Administrator
  * @date 2019/8/4
  */
-public class Example_4 {
+public class Example_4_FindMedianSortedArrays {
 
     public static void main(String[] args) {
         int[] nums1 = new int[]{1, 3};

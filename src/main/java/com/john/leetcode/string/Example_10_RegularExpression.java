@@ -1,13 +1,13 @@
 /*
  *
  * 项目名：	com.john.leetcode.part_1_10
- * 文件名：	Example_10
+ * 文件名：	Example_10_RegularExpression
  * 模块说明：
  * 修改历史：
  * 2019/8/12 - Administrator - 创建。
  */
 
-package com.john.leetcode.part_1_10;
+package com.john.leetcode.string;
 
 /**
  * 10. 给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
@@ -19,7 +19,7 @@ package com.john.leetcode.part_1_10;
  * @author Administrator
  * @date 2019/8/12
  */
-public class Example_10 {
+public class Example_10_RegularExpression {
 
     public static final char ONE = '.';
     public static final char ANY = '*';

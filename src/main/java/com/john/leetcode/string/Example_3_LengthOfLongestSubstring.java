@@ -1,13 +1,13 @@
 /* 
  * 
  * 项目名：	com.john.leetcode.part_1_10
- * 文件名：	Example_3
+ * 文件名：	Example_3_LengthOfLongestSubstring
  * 模块说明：	
  * 修改历史：
  * 2019/8/1 - Administrator - 创建。
  */
 
-package com.john.leetcode.part_1_10;
+package com.john.leetcode.string;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +27,7 @@ import java.util.Map;
  * @author Administrator
  * @date 2019/8/1
  */
-public class Example_3 {
+public class Example_3_LengthOfLongestSubstring {
 
     public static void main(String[] args) {
         String param1 = "abcabcbb";
