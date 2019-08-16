@@ -9,6 +9,8 @@
 
 package com.john.leetcode.array;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,10 @@ import java.util.Map;
 public class Example_1_TwoSum {
 
     public static void main(String[] args) {
+        int[] nums = new int[]{2, 7, 11, 15};
+        int target = 9;
 
+        System.out.println(JSONObject.toJSONString(twoSum(nums, target)));
     }
 
     public static int[] twoSum(int[] nums, int target) {
@@ -46,7 +51,7 @@ public class Example_1_TwoSum {
             if(idx != null) {
                 return new int[]{idx, i};
             }
-            // 把期望的
+            // 把期望的值和当前下标放入 MAP
             map.put(target - nums[i], i);
         }
 
