@@ -9,6 +9,8 @@
 
 package com.john.leetcode.linked;
 
+import com.john.leetcode.entity.Example_2_ListNode;
+
 /**
  * 题目 2
  * 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
@@ -28,16 +30,16 @@ package com.john.leetcode.linked;
 public class Example_2_AddTwoNumbers {
 
     public static void main(String[] args) {
-        ListNode param1 = createLink(new int[]{2, 4});
-        ListNode param2 = createLink(new int[]{5, 9});
+        Example_2_ListNode param1 = createLink(new int[]{2, 4});
+        Example_2_ListNode param2 = createLink(new int[]{5, 9});
 
-        ListNode result = addTwoNumbers(param1, param2);
+        Example_2_ListNode result = addTwoNumbers(param1, param2);
         System.out.println("结果: ");
         printLink(result);
 
     }
 
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public static Example_2_ListNode addTwoNumbers(Example_2_ListNode l1, Example_2_ListNode l2) {
 
         if(isZero(l1)) {
             return l2;
@@ -47,10 +49,10 @@ public class Example_2_AddTwoNumbers {
             return l1;
         }
 
-        ListNode resultHead = new ListNode(0);
-        ListNode resultItr = resultHead;
-        ListNode itrA = l1;
-        ListNode itrB = l2;
+        Example_2_ListNode resultHead = new Example_2_ListNode(0);
+        Example_2_ListNode resultItr = resultHead;
+        Example_2_ListNode itrA = l1;
+        Example_2_ListNode itrB = l2;
         boolean isUp = false;
         do{
 
@@ -61,7 +63,7 @@ public class Example_2_AddTwoNumbers {
                 result = result % 10;
             }
 
-            resultItr.next = new ListNode(result);
+            resultItr.next = new Example_2_ListNode(result);
             resultItr = resultItr.next;
 
             itrA = itrA != null ? itrA.next : null;
@@ -73,33 +75,33 @@ public class Example_2_AddTwoNumbers {
 
     }
 
-    public static int nullToZero(ListNode node) {
+    public static int nullToZero(Example_2_ListNode node) {
         return node == null ? 0 : node.val;
     }
 
-    public static boolean hasNext(ListNode node) {
+    public static boolean hasNext(Example_2_ListNode node) {
         return node != null;
     }
 
-    public static boolean isZero(ListNode node) {
+    public static boolean isZero(Example_2_ListNode node) {
         return node == null || (!hasNext(node) && node.val == 0);
     }
 
-    public static ListNode createLink(int[] arr) {
-        ListNode head = new ListNode(0);
-        ListNode itr = head;
+    public static Example_2_ListNode createLink(int[] arr) {
+        Example_2_ListNode head = new Example_2_ListNode(0);
+        Example_2_ListNode itr = head;
 
         for(int temp : arr) {
-            itr.next = new ListNode(temp);
+            itr.next = new Example_2_ListNode(temp);
             itr = itr.next;
         }
 
         return head.next;
     }
 
-    public static void printLink(ListNode head) {
+    public static void printLink(Example_2_ListNode head) {
         StringBuilder sb = new StringBuilder("[");
-        ListNode itr = head;
+        Example_2_ListNode itr = head;
         while(itr != null) {
             sb.append(itr.val).append(", ");
             itr = itr.next;
@@ -111,8 +113,3 @@ public class Example_2_AddTwoNumbers {
 
 }
 
-class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) { val = x; }
-}
