@@ -9,6 +9,9 @@
 
 package com.john.leetcode.test;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 /**
  * @author tongyongjian
  * @date 2020/7/24
@@ -16,13 +19,45 @@ package com.john.leetcode.test;
 public class Test {
 
     public static void main(String[] args) {
-        Thread thread1 = new Thread(new PrintDemo(1));
-        Thread thread2 = new Thread(new PrintDemo(2));
-        Thread thread3 = new Thread(new PrintDemo(3));
+        //Thread thread1 = new Thread(new PrintDemo(1));
+        //Thread thread2 = new Thread(new PrintDemo(2));
+        //Thread thread3 = new Thread(new PrintDemo(3));
+        //
+        //thread1.start();
+        //thread2.start();
+        //thread3.start();
 
-        thread1.start();
-        thread2.start();
-        thread3.start();
+        boolean result = testTimeCheck();
+        System.out.println(result);
+    }
+
+    public static boolean testTimeCheck() {
+        String startTime = "09:00", endTime = "23:30";
+
+        String[] startTimeArr = startTime.split(":");
+        String[] endTimeArr = endTime.split(":");
+        if(startTimeArr.length != 2 || endTimeArr.length != 2) {
+            return false;
+        }
+
+        LocalDateTime startDateTime = LocalDateTime.now()
+            .withHour(Integer.parseInt(startTimeArr[0]))
+            .withMinute(Integer.parseInt(startTimeArr[1]))
+            .withSecond(0).withNano(0);
+
+        LocalDateTime endDateTime = LocalDateTime.now()
+            .withHour(Integer.parseInt(endTimeArr[0]))
+            .withMinute(Integer.parseInt(endTimeArr[1]))
+            .withSecond(0).withNano(0);
+
+        long startUnixTime = startDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        long endUnixTime = endDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        if(startUnixTime > endUnixTime) {
+            return false;
+        }
+
+        long nowUnixTime = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        return startUnixTime <= nowUnixTime && nowUnixTime <= endUnixTime;
     }
 }
 
