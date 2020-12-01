@@ -27,8 +27,21 @@ public class Test {
         //thread2.start();
         //thread3.start();
 
-        boolean result = testTimeCheck();
-        System.out.println(result);
+        //boolean result = testTimeCheck();
+        //System.out.println(result);
+
+        testFinally(11);
+    }
+
+    public static void testFinally(int param) {
+        try {
+            if(param <= 10) {
+                return;
+            }
+            System.out.println("aaaaaaa");
+        } finally {
+            System.out.println("bbbbbbb");
+        }
     }
 
     public static boolean testTimeCheck() {

@@ -9,11 +9,9 @@
 
 package com.john.leetcode.tree;
 
-import com.alibaba.fastjson.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 树的基础练习
@@ -23,108 +21,100 @@ import java.util.List;
  */
 public class Example_0_Base {
 
-    private static Example_0_Base SELF = new Example_0_Base();
-
-    private static void test() {
-        String pre = "value_";
-        String val = pre + "1";
-        System.out.println(val.substring(pre.length()));
-    }
+    private static transient int size = 0;
 
     public static void main(String[] args) {
-        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        System.out.println(JSONObject.toJSONString(scrollAssign(list, 20)));
-        //test();
-    }
-
-    private int sum(int param) {
-        if(param == 1) {
-            return 1;
+        char[] dataArr = new char[]{'B', 'H', 'E', 'Z', 'Q', 'U', 'P', 'Y', 'I'};
+        Node head = new Node('A');
+        for(char temp : dataArr) {
+            add(head, temp);
         }
-        return param + sum(param - 1);
+
+        preTraverse(head);
+        System.out.println("---------- size = " + size + " ------------");
+        midTraverse(head);
     }
 
     /**
-     * 创建一棵树
-     * @param degree 度
-     * @param height 高度
-     * @return
+     * 先序遍历
+     * @param head
      */
-    private TreeNode createTree(int degree, int height) {
-        char value = 65;
-        TreeNode root = new TreeNode(String.valueOf(value));
-
-        TreeNode tempNode = null, tempNext = root;
-        for(int h = 0; h < height; h ++) {
-            for(int d = 0; d < degree; d ++) {
-                tempNode = new TreeNode(String.valueOf(++ value));
-                tempNext.child.add(tempNode);
-            }
-            //tempNext
+    private static void preTraverse(Node head) {
+        if(head == null) {
+            return;
         }
-
-        return root;
+        System.out.println(head.getData());
+        preTraverse(head.getLeft());
+        preTraverse(head.getRight());
     }
 
-
-    class TreeNode {
-        private TreeNode parent;
-
-        private List<TreeNode> child;
-
-        private String value;
-
-        public TreeNode() {
+    /**
+     * 中序
+     * @param head
+     */
+    private static void midTraverse(Node head) {
+        if(head == null) {
+            return;
         }
-
-        public TreeNode(String value) {
-            this.value = value;
-        }
+        midTraverse(head.getLeft());
+        System.out.println(head.getData());
+        midTraverse(head.getRight());
     }
 
-    private static <T> List<List<T>> scrollAssign(List<T> source, int size) {
-        List<List<T>> result = new ArrayList<>();
-        if(source.size() <= size) {
-            result.add(source);
-            return result;
+    /**
+     * 后续
+     * @param head
+     */
+    private static void postTraverse(Node head) {
+        if(head == null) {
+            return;
         }
-
-        int total = source.size();
-        int idx = 0;
-        List<T> value = new ArrayList<>(size);
-        while(true) {
-            value.add(source.get(idx));
-            if(idx + 1 == total) {
-                result.add(value);
-                break;
-            }
-            if((idx + 1) % size == 0) {
-                result.add(value);
-                value = new ArrayList<>(size);
-            }
-
-            idx ++;
-        }
-        return result;
+        postTraverse(head.getLeft());
+        postTraverse(head.getRight());
+        System.out.println(head.getData());
     }
 
-    private static <T> List<List<T>> averageAssign(List<T> source, int size) {
-        int parts = ((source.size() - 1) / size) + 1;
-        List<List<T>> result = new ArrayList<>();
-        int remainder = source.size() % parts;  //(先计算出余数)
-        int number = source.size() / parts;  //然后是商
-        int offset = 0;//偏移量
-        for (int i = 0; i < parts; i++) {
-            List<T> value = null;
-            if (remainder > 0) {
-                value = source.subList(i * number + offset, (i + 1) * number + offset + 1);
-                remainder --;
-                offset ++;
+    private static void add(Node node, char data) {
+        if(node == null) {
+            return;
+        }
+
+        if(node.getData() >= data) {
+            if(node.getLeft() == null) {
+                Node n = new Node(data);
+                node.setLeft(n);
+                size ++;
             } else {
-                value = source.subList(i * number + offset, (i + 1) * number + offset);
+                add(node.getLeft(), data);
             }
-            result.add(value);
+            return;
         }
-        return result;
+
+        if(node.getData() < data) {
+            if(node.getRight() == null) {
+                Node n = new Node(data);
+                node.setRight(n);
+                size ++;
+            } else {
+                add(node.getRight(), data);
+            }
+        }
+    }
+
+}
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class Node {
+    private char data;
+
+    private Node left;
+
+    private Node right;
+
+    public Node(char data) {
+        this.data = data;
     }
 }
