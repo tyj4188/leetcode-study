@@ -14,6 +14,9 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * 快速排序
  *
+ * 时间复杂度:
+ *   O(n log n)
+ *
  * 大致流程 :
  *   1. 先找到第一个数的位置。
  *   2. 从步骤 1 找到的位置把数据分为左右两部分。
