@@ -39,7 +39,7 @@ import com.alibaba.fastjson.JSONObject;
 public class MergeSort {
 
     public static void main(String[] args) {
-        int[] param = new int[]{15, 13, 10, 18, 21, 19};
+        int[] param = new int[]{15, 13, 10, 18, 21, 19, 10};
         int[] result = new int[param.length];
         //version_1(param);
 

@@ -28,10 +28,10 @@ import com.alibaba.fastjson.JSONObject;
  * 步骤 1 - 定位 :
  *   升序排一组数字 [5, 2, 1, 4, 6, 8, 3]
  *
- *   1. 定义一个临时变量存储要定位的元素。
+ *   1. 定义一个临时变量 T 存储要定位的元素。
  *   2. 定义左右连个游标, L 指向第一个元素, R 指向最后一个元素。
- *   3. R 和 L 指向的元素相比较, R 比 L 小赋值给 L 反之则位移。
- *   4. L 和 R 相反, L 比 R 大赋值给 R 反之则位移。
+ *   3. R 和定位数字 T, R 比 T 小赋值给 L 反之则位移。
+ *   4. L 和 R 相反, L 比 T 大赋值给 R 反之则位移。
  *   5. 赋值之后当前游标的操作结束。
  *   6. L 和 R 重合后则定位结束, 把临时变量存储的元素赋值。
  *   7. 返回 L 或 R 当前的位置。
@@ -49,7 +49,7 @@ public class QuickSort {
     public static final QuickSort THIS = new QuickSort();
 
     public static void main(String[] args) {
-        int[] data = new int[]{5, 2, 1, 4, 6, 8, 3};
+        int[] data = new int[]{115, 36, 27, 89, 12, 130, 9};
         THIS.quickSort(data, 0, data.length - 1);
         System.out.println(JSONObject.toJSONString(data));
     }
